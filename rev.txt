@@ -36,6 +36,13 @@ except ImportError:
     print('Check Setting')
     print('Check API Server')
     time.sleep(6)
+    os.system('pip install tldextract')
+    os.system('pip install BeautifulSoup4')
+    os.system('pip install pycryptodome')
+    os.system('pip install requests_toolbelt')
+    os.system('pip install colorama')
+    os.system('pip install pyfiglet')
+    os.system('pip install cookies')
     from colorama.ansi import clear_screen
     from setting import api
     import os
