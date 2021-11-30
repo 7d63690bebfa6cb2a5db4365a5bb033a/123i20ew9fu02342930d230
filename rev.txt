@@ -130,7 +130,7 @@ def tcolor(text): return text.format(
 
 def options():
     global arg
-    arg.add_argument("list", nargs="?",
+    arg.add_argument("lists", nargs="?",
                      help="Your list website")
     arg.add_argument("-t", dest="thread",
                      help="Set Thread", default=100)
@@ -138,7 +138,7 @@ def options():
                      help="Reversing")
     arg.add_argument("-cms", action='store_true', help="Checker CMS")
     args = arg.parse_args()
-    if len(sys.argv) != 1 and args.sitelists:
+    if len(sys.argv) != 1 and args.lists:
         return args
     print(arg.print_help())
     return 0
@@ -149,7 +149,7 @@ class TroyaMain:
 
     def __init__(self, arg):
         self.thread = int(arg.thread)
-        self.sites = arg.sitelists
+        self.sites = arg.lists
         self.arg = arg
 
     def uparse(self, url):
@@ -267,11 +267,11 @@ if __name__ == "__main__":
         args = options()
         if args:
             print("", "")
-            if not os.path.exists(args.sitelists):
+            if not os.path.exists(args.lists):
                 print("{r}x", "")
                 exit()
             else:
-                args.sitelists = open(args.sitelists, "r").read().splitlines()
+                args.lists = open(args.lists, "r").read().splitlines()
                 troya = TroyaMain(args)
                 print("", "")
                 troya.execute()
