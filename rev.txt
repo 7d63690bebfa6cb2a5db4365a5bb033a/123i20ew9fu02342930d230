@@ -195,6 +195,8 @@ class CmsChecker (TroyaMain):
                 cms = "laravel"
             elif "/wp-content/" in response2:
                 cms = "wordpress"
+            elif "/mt/" in response2:
+                cms = "mt-Movable"
             elif "Joomla" in response2 and 'com_' in response2:
                 cms = "joomla"
             elif "osCsid" in response2 or "ui-widget infoBoxContainer" in response2:
