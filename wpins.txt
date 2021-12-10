@@ -1,14 +1,6 @@
-try:
-    import crayons
-except ImportError:
-    print('Install crayons')
-
+import crayons
 import re, os, getpass
-try:
-    import requests
-except ImportError:
-    print('Install requests')
-
+import requests
 import urllib3
 from platform import system
 from colorama import Fore, Style
