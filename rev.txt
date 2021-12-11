@@ -130,15 +130,15 @@ def tcolor(text): return text.format(
 
 def options():
     global arg
-    arg.add_argument("lists", nargs="?",
-                     help="Your list website")
+    arg.add_argument("sitelists", nargs="?",
+                     help="yourlist ( ex: blabla.txt )")
     arg.add_argument("-t", dest="thread",
-                     help="Set Thread", default=100)
+                     help="set thread ( default: 100 )", default=100)
     arg.add_argument("-rev", action='store_true',
-                     help="Reversing")
-    arg.add_argument("-cms", action='store_true', help="Checker CMS")
+                     help="start reverse ip tools")
+    arg.add_argument("-cms", action='store_true', help="start cms checker")
     args = arg.parse_args()
-    if len(sys.argv) != 1 and args.lists:
+    if len(sys.argv) != 1 and args.sitelists:
         return args
     print(arg.print_help())
     return 0
@@ -149,8 +149,9 @@ class TroyaMain:
 
     def __init__(self, arg):
         self.thread = int(arg.thread)
-        self.sites = arg.lists
+        self.sites = arg.sitelists
         self.arg = arg
+        self.api = "http://" + requests.get("https://pastebin.com/raw/seG3V7H7").json()['api'] + "/rev/"
 
     def uparse(self, url):
         url = url.replace("\n", "").replace("\r", "")
@@ -240,8 +241,7 @@ class ReverseIP (TroyaMain):
                 return print(url, "Same IP")
                 open("Result/ips.txt", "a").write(ip, url, domain + "\n")
             self.tmp.append(ip)
-            response = requests.get(
-                "http://155.248.200.244:1337/rev/" + ip, timeout=10).json()
+            response = requests.get( self.api + ip, timeout = 10 ).json()
             if response['status'] == 200:
                 for site in response['response']:
                     open("Result/revallcms.txt", "a").write(site + "\n")
@@ -269,11 +269,11 @@ if __name__ == "__main__":
         args = options()
         if args:
             print("", "")
-            if not os.path.exists(args.lists):
+            if not os.path.exists(args.sitelists):
                 print("{r}x", "")
                 exit()
             else:
-                args.lists = open(args.lists, "r").read().splitlines()
+                args.sitelists = open(args.sitelists, "r").read().splitlines()
                 troya = TroyaMain(args)
                 print("", "")
                 troya.execute()
