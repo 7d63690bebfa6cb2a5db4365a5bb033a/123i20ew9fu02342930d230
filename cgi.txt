@@ -27,7 +27,7 @@ def banners():
 banners()
 
 key = input("Key : ")
-if key == "ac5e1deef70affecaf0bcb791eea7d8c":
+if key == "cgiv2PTBOT":
   print("Key Valid")
 else:
   exit("Key Invalid")
