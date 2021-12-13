@@ -91,7 +91,7 @@ def remindme(url):
                     driver.get(link + '/wp-admin/update.php?action=upload-plugin')
                     try:
                         driver.find_element_by_id("error-page")
-                        print(yellow + "Detected FTP, Try Manual " + link )
+                        print(yellow + "Detected Error page, Try Manual " + link )
                         open("Result\FTP.txt", "a").write(url +'\n')
                         time.sleep(20)
                         driver.close()
