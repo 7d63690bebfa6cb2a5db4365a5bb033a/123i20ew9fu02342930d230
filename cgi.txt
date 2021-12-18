@@ -27,7 +27,7 @@ def banners():
 banners()
 
 key = input("Key : ")
-if key == "cgiv2PTBOT":
+if key == "cgiexploitnew":
   print("Key Valid")
 else:
   exit("Key Invalid")
